@@ -98,6 +98,7 @@ export default function Friends() {
 }
 
 function Followcard({ name, desc ,id, front, back }: any) {
+  console.log(front + "and" + back);
   const [got, setGot] = useState(false);
 
   return (
