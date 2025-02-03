@@ -81,7 +81,7 @@ function NetworkItem({ icon, label, value }: { icon: JSX.Element; label: string;
 
 function FollowCard({ id, name, desc, front, back }: any) {
   const [unfriended, setUnfriended] = useState(false);
-
+   console.log(front + "and" + back);
   async function handleUnfriend() {
     try {
       const response = await axios.put(
