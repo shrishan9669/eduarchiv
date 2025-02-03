@@ -124,80 +124,74 @@ export default function People() {
   );
 }
 
-function Followcard({ name, id,desc, setWithdraw, front, back }: any) {
+function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
   const [got, setGot] = useState(false);
 
   return (
-    <div key={id} className=" w-[230px] border rounded-lg">
-      {/* backimage */}
-      <div className="h-[33%] relative">
+    <div key={id} className="w-full sm:w-[250px] md:w-[280px] lg:w-[300px] border rounded-xl shadow-lg bg-white flex flex-col">
+      {/* Background Image */}
+      <div className="relative h-[90px]">
+        <img className="object-cover w-full h-full rounded-t-lg" src={back || "https://via.placeholder.com/150"} alt="Cover" />
         <img
-          className="object-cover rounded-t-lg w-full h-full"
-          src={back || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'}
-          alt=""
+          className="absolute w-20 h-20 rounded-full left-1/2 transform -translate-x-1/2 -bottom-8 border-4 border-white"
+          src={front || "https://via.placeholder.com/150"}
+          alt="Profile"
         />
-        <img
-          className="absolute w-24 rounded-full left-16 bottom-4 top-14 h-24"
-          src={front}
-          alt=""
-        />
+      </div> {/* Content Section */}
+      <div className="flex flex-col items-center pt-14 px-4 pb-4 text-center">
+        <h2 className="font-bold text-lg">{name}</h2>
+        <p className="text-slate-500 text-sm">{desc}</p>
       </div>
 
-      {/* down div */}
-      <div className="h-[85%] py-14 flex flex-col justify-between">
-        <div className="flex flex-col justify-start">
-          <span className="font-bold text-xl ml-4">{name}</span>
-          <p className="text-slate-500 ml-4 w-auto">{desc}</p>
-        </div>
-        <div className="flex justify-center">
-          <button
-            onClick={async () => {
-              if (!got) {
-                const sending = await axios({
-                  url: "https://backend-j5f0.onrender.com/user/sendreq",
-                  method: "POST",
-                  data: {
-                    sender: localStorage.getItem("userid"),
-                    receiver: id,
-                  },
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  },
-                });
-                console.log(sending.data);
+      {/* Button */}
+      <div className="flex justify-center pb-4">
+        <button
+          onClick={async () => {
+            if (!got) {
+              const sending = await axios({
+                url: "https://backend-j5f0.onrender.com/user/sendreq",
+                method: "POST",
+                data: {
+                  sender: localStorage.getItem("userid"),
+                  receiver: id,
+                },
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              });
 
-                if (sending.data.msg) {
-                  setGot(true);
-                  localStorage.setItem("profileid", sending.data.id);
-                }
+              if (sending.data.msg) {
+                setGot(true);
+                localStorage.setItem("profileid", sending.data.id);
               }
-            }}
-            className={`px-14 rounded-full mt-4 hover:border-2 font-[600] hover:bg-blue-100 hover:text-blue-900 transition-all duration-100 border-blue-700 border ${
-              got
-                ? "hover:border-2 hover:border-slate-800 hover:bg-slate-200"
-                : ""
-            } text-blue-700 items-center flex py-1`}
-          >
-            {!got ? (
-              <span className="flex hover:text-blue-800 gap-2 items-center">
-                <IoMdPersonAdd />
-                Connect
-              </span>
-            ) : (
-              <span
-                onClick={() => setWithdraw(true)}
-                className="flex w-full h-full gap-2 hover:text-slate-900 items-center text-slate-500 "
-              >
-                <IoMdTime className="text-xl" />
-                Pending
-              </span>
-            )}
-          </button>
-        </div>
+            }
+          }}
+          className={`w-[80%] rounded-full font-semibold text-center py-2 transition-all duration-150 border ${
+            got
+              ? "bg-gray-200 text-gray-600 border-gray-400"
+              : "border-blue-700 text-blue-700 hover:bg-blue-100 hover:text-blue-900"
+          }`}
+        >
+          {!got ? (
+            <span className="flex justify-center items-center gap-2">
+              <IoMdPersonAdd />
+              Connect
+            </span>
+          ) : (
+            <span
+              onClick={() => setWithdraw(true)}
+              className="flex justify-center items-center gap-2"
+            >
+              <IoMdTime />
+              Pending
+            </span>
+          )}
+        </button>
       </div>
     </div>
   );
 }
+
 
 function Withdraw({ setWithdraw }: any) {
   return (
