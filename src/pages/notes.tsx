@@ -48,7 +48,7 @@ export default function Notes() {
         try{
 
           const response = await axios({
-                url:'https://backend-j5f0.onrender.com/user/postnote',
+                url:'http://localhost:3000/user/postnote',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -115,7 +115,7 @@ export default function Notes() {
         setBackground(byteData)
 
         await axios({
-          url:'https://backend-j5f0.onrender.com/user/backimage',
+          url:'http://localhost:3000/user/backimage',
           method:"POST",
           data:{
             id:localStorage.getItem('userid'),
@@ -140,7 +140,7 @@ export default function Notes() {
         setProfile(byteData)
 
         await axios({
-          url:'https://backend-j5f0.onrender.com/user/profileimage',
+          url:'http://localhost:3000/user/profileimage',
           method:"POST",
           data:{
             id:localStorage.getItem('userid'),
@@ -159,7 +159,7 @@ export default function Notes() {
       async function Getimages(){
         try{
           const images =await axios({
-            url:"https://backend-j5f0.onrender.com/user/getimage",
+            url:"http://localhost:3000/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -192,7 +192,7 @@ export default function Notes() {
     async function Users(){
       try{
         const user = await axios({
-          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -358,7 +358,7 @@ export default function Notes() {
         setBuffer(true);
         try {
           const data = await axios({
-            url: `https://backend-j5f0.onrender.com/user/findnotes?semester=${Number(
+            url: `http://localhost:3000/user/findnotes?semester=${Number(
               semester
             )}&course=${course}`,
             method: "GET",
@@ -492,7 +492,7 @@ export default function Notes() {
     setYourbuffer(true);
     try {
       const data = await axios({
-        url: `https://backend-j5f0.onrender.com/user/yournotes?id=${localStorage.getItem("userid")}`,
+        url: `http://localhost:3000/user/yournotes?id=${localStorage.getItem("userid")}`,
         method: "GET",
         headers:{
           Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -540,6 +540,7 @@ export default function Notes() {
       subject={each.subject}
       pdfid={each.id}
       type={each.type}
+      drivelink={each.pdf}
     />
   ))}
 </div>
@@ -563,7 +564,7 @@ export default function Notes() {
         key={e.id}
         className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
       >
-        <Cardall subject={e.subject} type={e.type} pdfid={e.id} pdf={e.pdf} />
+        <Cardall subject={e.subject} type={e.type} pdfid={e.id} drivelink={e.pdf} />
       </div>
     ))
   ) : (
@@ -590,30 +591,8 @@ export default function Notes() {
         </div>
     )
 }
-function Cardyours({ subject, pdfid, type }: any) {
+function Cardyours({ subject, pdfid, type ,drivelink}: any) {
     const [delbuffer, setDelBuffer] = useState(false);
-    const [drivelink,setDrivelink]  = useState('');
-    async function Findpdf(){
-      try{
-        const The_pdf = await axios({
-          url:`https://backend-j5f0.onrender.com/admin/findnotelink?id=${pdfid}`,
-          method:"GET",
-          headers:{
-            Authorization:`Bearer ${localStorage.getItem('token')}`
-          }
-        })
-        console.log(The_pdf.data.link)
-        setDrivelink(The_pdf.data.link)
-
-      }
-      catch(err){
-        console.log(err)
-        alert(err)
-      }
-    }
-    useEffect(()=>{
-      Findpdf()
-    },[])
     
   
    
@@ -635,7 +614,7 @@ function Cardyours({ subject, pdfid, type }: any) {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/deletenotes?id=${pdfid}`,
+                    url: `http://localhost:3000/user/deletenotes?id=${pdfid}`,
                     method: 'DELETE',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -643,7 +622,7 @@ function Cardyours({ subject, pdfid, type }: any) {
                   });
   
                   const res2 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
+                    url: `http://localhost:3000/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -686,59 +665,21 @@ function Cardyours({ subject, pdfid, type }: any) {
           <IoMdDownload
                       title="Download"
                       onClick={async () => {
-                          document.getElementById('downloadnote-click')?.click()
+                          document.getElementById(`downloadnote-${pdfid}`)?.click()
                       }}
                       className="text-2xl text-gray-600 cursor-pointer hover:text-green-500 transition duration-300"
                     />
-                      <a href={drivelink} id="downloadnote-click" download target="_blank" className="hidden"></a>
+                      <a href={drivelink} id={`downloadnote-${pdfid}`} download target="_blank" className="hidden"></a>
           
                    </div>
         </div>
   
-        {/* {preview && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white w-full  h-full rounded-lg shadow-lg relative">
-              <button
-                className="absolute top-4 right-4 bg-red-600 text-white font-bold px-4 py-2 rounded-full hover:bg-red-700 transition duration-300"
-                onClick={() => setPreview(false)}
-              >
-                X
-              </button>
-              <iframe
-                src={`https://backend-j5f0.onrender.com/user/previewnote?id=${pdfid}`}
-                className="w-full h-full rounded-lg"
-                frameBorder="0"
-                title="PDF Preview"
-              ></iframe>
-            </div>
-          </div>
-        )} */}
+     
       </div>
     );
 }
- function Cardall({ subject, pdfid, type }: any) {
-  const [drivelink,setDrivelink]  = useState('');
-  async function Findpdf(){
-    try{
-      const The_pdf = await axios({
-        url:`https://backend-j5f0.onrender.com/admin/findnotelink?id=${pdfid}`,
-        method:"GET",
-        headers:{
-          Authorization:`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      console.log(The_pdf.data.link)
-      setDrivelink(The_pdf.data.link)
-
-    }
-    catch(err){
-      console.log(err)
-      alert(err)
-    }
-  }
-  useEffect(()=>{
-    Findpdf()
-  },[])
+ function Cardall({ subject, pdfid, type ,drivelink}: any) {
+  
   return (
     <div className="w-64 h-80 shadow-lg rounded-xl flex flex-col bg-gradient-to-b from-white to-gray-100 border border-gray-200 hover:shadow-2xl transform hover:scale-105 transition duration-300">
       <div
@@ -756,23 +697,23 @@ function Cardyours({ subject, pdfid, type }: any) {
       <div className="flex flex-col">
                       <MdPreview
                         onClick={() => {
-                           document.getElementById('previewnote-click')?.click()
+                           document.getElementById(`previewnote-${pdfid}`)?.click()
                         
                         }}
                         title="See Preview"
                         className="text-2xl text-gray-600 cursor-pointer hover:text-blue-500 transition duration-300"
                       />
-                      <a href={drivelink} id="previewnote-click" target="_blank" className="hidden"></a>
+                      <a href={drivelink} id={`previewnote-${pdfid}`} target="_blank" className="hidden"></a>
                     </div>
                     <div>
                   <IoMdDownload
                       title="Download"
                       onClick={async () => {
-                          document.getElementById('downloadnote-click')?.click()
+                          document.getElementById(`downloadnote-${pdfid}`)?.click()
                       }}
                       className="text-2xl text-gray-600 cursor-pointer hover:text-green-500 transition duration-300"
                     />
-                      <a href={drivelink} id="downloadnote-click" download target="_blank" className="hidden"></a>
+                      <a href={drivelink} id={`downloadnote-${pdfid}`} download target="_blank" className="hidden"></a>
           
                    </div>
       </div>
