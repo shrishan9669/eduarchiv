@@ -19,6 +19,7 @@ export default function Show(){
     const [type,setType] = useState('')
     const [file,setFile] = useState<File | null>(null)
     
+  
     async function handlefileupload(){
         if(!type || !uploadCourse || !uploadsemester || !subject){
             alert("Please select all fields!!")
@@ -49,7 +50,7 @@ export default function Show(){
         try{
 
           const response = await axios({
-                url:'https://backend-j5f0.onrender.com/admin/pdfspost',
+                url:'http://localhost:3000/admin/pdfspost',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -134,7 +135,7 @@ export default function Show(){
 
         try{
           await axios({
-            url:'https://backend-j5f0.onrender.com/user/backimage',
+            url:'http://localhost:3000/user/backimage',
             method:"POST",
             data:formdata,
             headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
@@ -175,7 +176,7 @@ export default function Show(){
         formdata.append("file",file)
 
         await axios({
-          url:'https://backend-j5f0.onrender.com/user/profileimage',
+          url:'http://localhost:3000/user/profileimage',
           method:"POST",
           data:formdata,
           headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
@@ -193,7 +194,7 @@ export default function Show(){
       async function Getimages(){
         try{
           const images =await axios({
-            url:"https://backend-j5f0.onrender.com/user/getimage",
+            url:"http://localhost:3000/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -202,16 +203,19 @@ export default function Show(){
   
           console.log(images.data.front);
           console.log(images.data.back);
-          if(images.data ){
+          if(images.data){
             
-          setBackground(images.data.back)
+            setBackground(images.data.back)
+           
             setProfile(images.data.front)
             
           }
   
         }
         catch(err){
-  
+          alert(err)
+             console.error(err)
+
         }
       }
 
@@ -225,7 +229,7 @@ const[contri,setContri] = useState('')
     async function Users(){
       try{
         const user = await axios({
-          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -437,7 +441,7 @@ const[contri,setContri] = useState('')
           setBuffer(true);
           try {
             const data = await axios({
-              url: `https://backend-j5f0.onrender.com/admin/findpdfs?semester=${Number(
+              url: `http://localhost:3000/admin/findpdfs?semester=${Number(
                 semester
               )}&course=${course}`,
               method: "GET",
@@ -463,6 +467,7 @@ const[contri,setContri] = useState('')
   </div>
 
   {/* Right Section */}
+ 
   <div
     ref={targetRef}
     className={`w-full lg:w-[70%] hover:border-yellow-500  transition-all duration-100 mx-4 lg:mr-10 p-6 rounded-lg shadow-lg grid grid-cols-1 border md:grid-cols-2 gap-6 ${
@@ -471,6 +476,7 @@ const[contri,setContri] = useState('')
         : ""
     }`}
   >
+    
     {/* Type Selection */}
     <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6" title="Type of paper">
       <label htmlFor="type" className="text-gray-700 font-medium">
@@ -581,15 +587,15 @@ const[contri,setContri] = useState('')
       setYourbuffer(true);
       try {
         const data = await axios({
-          url: `https://backend-j5f0.onrender.com/user/getall?studentid=${localStorage.getItem("userid")}`,
+          url: `http://localhost:3000/user/getall?studentid=${localStorage.getItem("userid")}`,
           method: "GET",
           headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
         });
 
         if (data.data.data) {
            
-          console.log(data.data.data);
-          
+         
+          console.log("Data is ",data.data.data)
           setUserdata(data.data.data);
           
         }
@@ -619,15 +625,16 @@ const[contri,setContri] = useState('')
   </span>
 
   {/* Cards Section */}
-  <div className="flex flex-wrap gap-4 md:gap-6 justify-center">
-    {userdata.map((each: any) => (
+  <div className={`flex flex-wrap gap-4 md:gap-6 ${userdata.length>0 ? '':'italic text-slate-500'} justify-center`}>
+    {userdata.length>0 ? userdata.map((each: any) => (
       <Cardyours
         key={each.id}
         subject={each.subject}
         pdfid={each.id}
         type={each.type}
+        drivelink={each.pdf}
       />
-    ))}
+    )):'No documents yet'}
   </div>
 </div>
 
@@ -635,9 +642,9 @@ const[contri,setContri] = useState('')
 
 
        {/* Cards div */}
-       <div className="pl-6 mb-10  md:pl-10 lg:pl-14 gap-7 mt-6 md:mt-10 mx-6 md:mx-10 lg:mx-14 py-4 md:py-5 flex flex-col bg-gradient-to-r from-gray-100 to-gray-300 rounded-xl shadow-xl">
+       <div className="flex flex-col mx-4 md:mx-10 lg:mx-14 gap-6 md:gap-8 lg:gap-10  md:mt-14 p-4 md:p-6 bg-gradient-to-r from-gray-100 to-gray-300 shadow-lg rounded-lg mb-52 ">
   {/* Title Section */}
-  <span className="text-lg bg-blue-100 text-blue-900 w-fit px-4 py-2 rounded-lg font-bold  shadow-md hover:scale-105 transform transition duration-300">
+  <span className="text-lg bg-blue-200 text-blue-900 w-fit px-3 md:px-4 py-2 rounded-lg font-bold  shadow-md hover:scale-105 transform transition duration-300">
     <span className="text-blue-950 underline">All</span> Docs Stay Here
   </span>
 
@@ -692,30 +699,9 @@ export function Circularloader() {
     </div>
   );
 }         
- function Cardyours({ subject, pdfid, type }: any) {
+ function Cardyours({ subject, pdfid, type,drivelink }: any) {
     const [delbuffer, setDelBuffer] = useState(false);
-    const [drivelink,setDrivelink]  = useState('');
-    async function Findpdf(){
-      try{
-        const The_pdf = await axios({
-          url:`https://backend-j5f0.onrender.com/admin/findpdflink?id=${pdfid}`,
-          method:"GET",
-          headers:{
-            Authorization:`Bearer ${localStorage.getItem('token')}`
-          }
-        })
-        console.log(The_pdf.data.link)
-        setDrivelink(The_pdf.data.link)
-
-      }
-      catch(err){
-        console.log(err)
-        alert(err)
-      }
-    }
-    useEffect(()=>{
-      Findpdf()
-    },[])
+    console.log(drivelink + "Pdf id is ->" + pdfid)
     
     return (
       <div className="w-64 h-80 shadow-lg rounded-xl flex flex-col bg-gradient-to-b from-white to-gray-100 border border-gray-200 hover:shadow-2xl transform hover:scale-105 transition duration-300">
@@ -734,13 +720,13 @@ export function Circularloader() {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/delpdf?docid=${pdfid}`,
+                    url: `http://localhost:3000/user/delpdf?docid=${pdfid}`,
                     method: 'DELETE',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
   
                   const res2 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/reduceContri?userid=${localStorage.getItem('userid')}`,
+                    url: `http://localhost:3000/user/reduceContri?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
@@ -769,24 +755,25 @@ export function Circularloader() {
           <div className="flex flex-col">
             <MdPreview
               onClick={() => {
-                 document.getElementById('preview-click')?.click()
+                 document.getElementById(`preview-${pdfid}`)?.click()
+               
               
               }}
               title="See Preview"
               className="text-2xl text-gray-600 cursor-pointer hover:text-blue-500 transition duration-300"
             />
-            <a href={drivelink} id="preview-click" target="_blank" className="hidden"></a>
+            <a href={drivelink} id={`preview-${pdfid}`} target="_blank" className="hidden"></a>
           </div>
          
          <div>
          <IoMdDownload
             title="Download"
             onClick={async () => {
-                document.getElementById('download-click')?.click()
+                document.getElementById(`download-${pdfid}`)?.click()
             }}
             className="text-2xl text-gray-600 cursor-pointer hover:text-green-500 transition duration-300"
           />
-            <a href={drivelink} id="download-click" download target="_blank" className="hidden"></a>
+            <a href={drivelink} id={`download-${pdfid}`} download target="_blank" className="hidden"></a>
 
          </div>
           
@@ -802,7 +789,7 @@ export function Circularloader() {
                 X
               </button>
               <iframe
-                src={`https://backend-j5f0.onrender.com/admin/preview?id=${pdfid}&token=Bearer ${localStorage.getItem('token')}`}
+                src={`http://localhost:3000/admin/preview?id=${pdfid}&token=Bearer ${localStorage.getItem('token')}`}
                 className="w-full h-full rounded-lg"
                 frameBorder="0"
                 title="PDF Preview"
@@ -818,7 +805,7 @@ export function Circularloader() {
     async function Findpdf(){
       try{
         const The_pdf = await axios({
-          url:`https://backend-j5f0.onrender.com/admin/findpdflink?id=${pdfid}`,
+          url:`http://localhost:3000/admin/findpdflink?id=${pdfid}`,
           method:"GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -854,12 +841,12 @@ export function Circularloader() {
         <div>
         <MdPreview
           onClick={() => {
-            document.getElementById("preview-click")?.click()
+            document.getElementById(`preview-${pdfid}`)?.click()
           }}
           title="See Preview"
           className="text-2xl text-gray-600 cursor-pointer hover:text-blue-500 transition duration-300"
         />
-        <a href={drivelink} target="_blank" className="hidden" id="preview-click"></a>
+        <a href={drivelink} target="_blank" className="hidden" id={`preview-${pdfid}`}></a>
         </div>
         
 
@@ -867,11 +854,11 @@ export function Circularloader() {
         <IoMdDownload
           title="Download"
           onClick={async () => {
-            document.getElementById("preview-download")?.click()
+            document.getElementById(`preview-${pdfid}`)?.click()
           }}
           className="text-2xl text-gray-600 cursor-pointer hover:text-green-500 transition duration-300"
         />
-                <a href={drivelink} target="_blank" className="hidden"  id="preview-download"></a>
+                <a href={drivelink} target="_blank" className="hidden"  id={`preview-${pdfid}`}></a>
 
         </div>
         
