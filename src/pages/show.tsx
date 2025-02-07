@@ -50,7 +50,7 @@ export default function Show(){
         try{
 
           const response = await axios({
-                url:'http://localhost:3000/admin/pdfspost',
+                url:'https://backend-j5f0.onrender.com/admin/pdfspost',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -135,7 +135,7 @@ export default function Show(){
 
         try{
           await axios({
-            url:'http://localhost:3000/user/backimage',
+            url:'https://backend-j5f0.onrender.com/user/backimage',
             method:"POST",
             data:formdata,
             headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
@@ -176,7 +176,7 @@ export default function Show(){
         formdata.append("file",file)
 
         await axios({
-          url:'http://localhost:3000/user/profileimage',
+          url:'https://backend-j5f0.onrender.com/user/profileimage',
           method:"POST",
           data:formdata,
           headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
@@ -194,7 +194,7 @@ export default function Show(){
       async function Getimages(){
         try{
           const images =await axios({
-            url:"http://localhost:3000/user/getimage",
+            url:"https://backend-j5f0.onrender.com/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -229,7 +229,7 @@ const[contri,setContri] = useState('')
     async function Users(){
       try{
         const user = await axios({
-          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -441,7 +441,7 @@ const[contri,setContri] = useState('')
           setBuffer(true);
           try {
             const data = await axios({
-              url: `http://localhost:3000/admin/findpdfs?semester=${Number(
+              url: `https://backend-j5f0.onrender.com/admin/findpdfs?semester=${Number(
                 semester
               )}&course=${course}`,
               method: "GET",
@@ -587,7 +587,7 @@ const[contri,setContri] = useState('')
       setYourbuffer(true);
       try {
         const data = await axios({
-          url: `http://localhost:3000/user/getall?studentid=${localStorage.getItem("userid")}`,
+          url: `https://backend-j5f0.onrender.com/user/getall?studentid=${localStorage.getItem("userid")}`,
           method: "GET",
           headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
         });
@@ -720,13 +720,13 @@ export function Circularloader() {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `http://localhost:3000/user/delpdf?docid=${pdfid}`,
+                    url: `https://backend-j5f0.onrender.com/user/delpdf?docid=${pdfid}`,
                     method: 'DELETE',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
   
                   const res2 = await axios({
-                    url: `http://localhost:3000/user/reduceContri?userid=${localStorage.getItem('userid')}`,
+                    url: `https://backend-j5f0.onrender.com/user/reduceContri?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
@@ -779,24 +779,7 @@ export function Circularloader() {
           
         </div>
   
-        {/* {preview && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white w-full  h-full rounded-lg shadow-lg relative">
-              <button
-                className="absolute top-4 right-4 bg-red-600 text-white font-bold px-4 py-2 rounded-full hover:bg-red-700 transition duration-300"
-                onClick={() => setPreview(false)}
-              >
-                X
-              </button>
-              <iframe
-                src={`http://localhost:3000/admin/preview?id=${pdfid}&token=Bearer ${localStorage.getItem('token')}`}
-                className="w-full h-full rounded-lg"
-                frameBorder="0"
-                title="PDF Preview"
-              ></iframe>
-            </div>
-          </div>
-        )} */}
+        
       </div>
     );
 }
@@ -805,7 +788,7 @@ export function Circularloader() {
     async function Findpdf(){
       try{
         const The_pdf = await axios({
-          url:`http://localhost:3000/admin/findpdflink?id=${pdfid}`,
+          url:`https://backend-j5f0.onrender.com/admin/findpdflink?id=${pdfid}`,
           method:"GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
