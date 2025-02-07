@@ -48,7 +48,7 @@ export default function Notes() {
         try{
 
           const response = await axios({
-                url:'http://localhost:3000/user/postnote',
+                url:'https://backend-j5f0.onrender.com/user/postnote',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -115,7 +115,7 @@ export default function Notes() {
         setBackground(byteData)
 
         await axios({
-          url:'http://localhost:3000/user/backimage',
+          url:'https://backend-j5f0.onrender.com/user/backimage',
           method:"POST",
           data:{
             id:localStorage.getItem('userid'),
@@ -140,7 +140,7 @@ export default function Notes() {
         setProfile(byteData)
 
         await axios({
-          url:'http://localhost:3000/user/profileimage',
+          url:'https://backend-j5f0.onrender.com/user/profileimage',
           method:"POST",
           data:{
             id:localStorage.getItem('userid'),
@@ -159,7 +159,7 @@ export default function Notes() {
       async function Getimages(){
         try{
           const images =await axios({
-            url:"http://localhost:3000/user/getimage",
+            url:"https://backend-j5f0.onrender.com/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -192,7 +192,7 @@ export default function Notes() {
     async function Users(){
       try{
         const user = await axios({
-          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -358,7 +358,7 @@ export default function Notes() {
         setBuffer(true);
         try {
           const data = await axios({
-            url: `http://localhost:3000/user/findnotes?semester=${Number(
+            url: `https://backend-j5f0.onrender.com/user/findnotes?semester=${Number(
               semester
             )}&course=${course}`,
             method: "GET",
@@ -492,7 +492,7 @@ export default function Notes() {
     setYourbuffer(true);
     try {
       const data = await axios({
-        url: `http://localhost:3000/user/yournotes?id=${localStorage.getItem("userid")}`,
+        url: `https://backend-j5f0.onrender.com/user/yournotes?id=${localStorage.getItem("userid")}`,
         method: "GET",
         headers:{
           Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -614,7 +614,7 @@ function Cardyours({ subject, pdfid, type ,drivelink}: any) {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `http://localhost:3000/user/deletenotes?id=${pdfid}`,
+                    url: `https://backend-j5f0.onrender.com/user/deletenotes?id=${pdfid}`,
                     method: 'DELETE',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -622,7 +622,7 @@ function Cardyours({ subject, pdfid, type ,drivelink}: any) {
                   });
   
                   const res2 = await axios({
-                    url: `http://localhost:3000/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
+                    url: `https://backend-j5f0.onrender.com/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
