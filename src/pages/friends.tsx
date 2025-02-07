@@ -11,7 +11,7 @@ export default function Friends() {
   async function fetchFriends() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/user/takefriends?id=${localStorage.getItem("userid")}`,
+        `https://backend-j5f0.onrender.com/user/takefriends?id=${localStorage.getItem("userid")}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -85,7 +85,7 @@ function FollowCard({ id, name, desc, front, back }: any) {
   async function handleUnfriend() {
     try {
       const response = await axios.put(
-        "http://localhost:3000/admin/unfriend",
+        "https://backend-j5f0.onrender.com/admin/unfriend",
         { id },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
