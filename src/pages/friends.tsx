@@ -11,12 +11,12 @@ export default function Friends() {
   async function fetchFriends() {
     try {
       const response = await axios.get(
-        `https://backend-j5f0.onrender.com/user/takefriends?id=${localStorage.getItem("userid")}`,
+        `http://localhost:3000/user/takefriends?id=${localStorage.getItem("userid")}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-
+ console.log(response.data.friends)
       if (response.data && response.data.friends) {
         setFriends(response.data.friends);
       }
@@ -48,17 +48,17 @@ export default function Friends() {
         {/* Right Section */}
         <div className="w-full md:w-[70%] bg-white shadow-lg p-5 rounded-xl">
           <h1 className="border mb-5 rounded-lg text-center font-medium text-gray-600 py-2 text-lg">
-            People to Follow
+            All my friends
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {Object.entries(friends).map(([key, value]: [string, any]) => (
               <FollowCard
-                desc={value.description}
+                desc={value?.description}
                 id={key}
                 key={key}
-                name={value.name}
-                front={value.profileimg}
-                back={value.backimg}
+                name={value?.name}
+                front={value?.profileimg}
+                back={value?.backimg}
               />
             ))}
           </div>
@@ -81,11 +81,11 @@ function NetworkItem({ icon, label, value }: { icon: JSX.Element; label: string;
 
 function FollowCard({ id, name, desc, front, back }: any) {
   const [unfriended, setUnfriended] = useState(false);
-   console.log(front + "and" + back);
+
   async function handleUnfriend() {
     try {
       const response = await axios.put(
-        "https://backend-j5f0.onrender.com/admin/unfriend",
+        "http://localhost:3000/admin/unfriend",
         { id },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
