@@ -16,6 +16,7 @@ export default function Notification() {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    console.log(all.data.all)
     if (all.data) {
       setNotifications(all.data.all);
     }
