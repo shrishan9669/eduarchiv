@@ -10,13 +10,13 @@ export default function Notification() {
 
   async function Getnotifications() {
     const all = await axios({
-      url: `https://backend-j5f0.onrender.com/user/getNotifications?userid=${localStorage.getItem("userid")}`,
+      url: `http://localhost:3000/user/getNotifications?userid=${localStorage.getItem("userid")}`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(all.data.all)
+    console.log("Noti->",all.data.all)
     if (all.data) {
       setNotifications(all.data.all);
     }
@@ -38,14 +38,15 @@ export default function Notification() {
 
   const [dot, setDot] = useState(0);
 
-  function Deletenotification(id:any) {
+  function Deletenotification({id}:any) {
+    console.log("Id from delete->",id)
     return (
       <div className="absolute h-[60px] flex items-center transition-all bg-white shadow-xl duration-300 justify-center left-4 sm:left-14 rounded-lg">
         <div className="flex items-center justify-center gap-3 sm:gap-5 w-full">
           <MdDeleteOutline
             onClick={async () => {
               const deleted = await axios({
-                url: `https://backend-j5f0.onrender.com/user/deletenotification?id=${id}`,
+                url: `http://localhost:3000/user/deletenotification?id=${id}`,
                 method: "DELETE",
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -54,7 +55,7 @@ export default function Notification() {
 
               if (deleted.data.msg) {
                 alert(deleted.data.msg);
-                nav("/notify");
+                window.location.href = '/notify'
               }
             }}
             className="text-2xl sm:text-3xl hover:text-slate-600"
@@ -93,7 +94,7 @@ export default function Notification() {
                 <img
                   onClick={async () => {
                     await axios({
-                      url: `https://backend-j5f0.onrender.com/user/changeseen?id=${each.id}`,
+                      url: `http://localhost:3000/user/changeseen?id=${each.id}`,
                       method: "PUT",
                       headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -115,7 +116,7 @@ export default function Notification() {
                 <p
                   onClick={async () => {
                     await axios({
-                      url: `https://backend-j5f0.onrender.com/user/changeseen?id=${each.id}`,
+                      url: `http://localhost:3000/user/changeseen?id=${each.id}`,
                       method: "PUT",
                       headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
