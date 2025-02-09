@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Docimage from '/Eduarchive.webp';
 import { FaHamburger } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
@@ -42,7 +42,7 @@ export default function Header() {
     }
   }, [location.pathname]);
 
-  const nav = useNavigate()
+  
   return (
     <div className="shadow-xl border bg-white">
       {/* Main Header */}
