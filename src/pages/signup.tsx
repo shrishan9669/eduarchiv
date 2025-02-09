@@ -15,6 +15,7 @@ export default function Signup() {
   const[desc,setDesc] = useState('')
   const [state, setState] = useState('password');
 
+
   return (
     <div className="w-full h-screen bg-white flex justify-center items-center mb-20 mt-10">
       <div className="flex flex-col w-full sm:w-[450px] bg-white rounded-lg shadow-lg p-8 space-y-8">
