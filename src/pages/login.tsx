@@ -107,7 +107,7 @@ export default function Login() {
                     localStorage.setItem("userid", find.data.id);
                     localStorage.setItem("email", email);
                     localStorage.setItem("token",find.data.token)
-                    nav("/show");
+                    window.location.href = ("/show");
                   }
                 } catch (err) {
                   console.error("Error in frontend while logging in:", err);
