@@ -1,0 +1,74 @@
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 176px;
+    height: 176px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #000;
+    box-shadow: 0 0 0 0 #0004;
+    animation: l2 1.5s infinite linear;
+    position: absolute;
+    transition: all;
+    color:white;
+    transition-duration: 4s;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    
+  }
+  .loader:before,
+  .loader:after {
+   
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 #0004;
+    animation: inherit;
+    animation-delay: -0.5s;
+  }
+  .loader:after {
+    animation-delay: -1s;
+  }
+  @keyframes l2 {
+      100% {box-shadow: 0 0 0 40px #0000}
+  }
+
+  /*  */
+  .loader2 {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    color:white;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    box-shadow: 0 0 0 0 #0004;
+    animation: l2 1.5s infinite linear;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    
+  }
+  .loader2:before,
+  .loader2:after {
+    
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 #0004;
+    animation: inherit;
+    animation-delay: -0.5s;
+  }
+  .loader2:after {
+    animation-delay: -1s;
+  }
+  @keyframes l2 {
+      100% {box-shadow: 0 0 0 40px #0000}
+  }
