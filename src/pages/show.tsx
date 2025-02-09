@@ -4,7 +4,7 @@ import { IoMdCheckmarkCircleOutline, IoMdDownload } from "react-icons/io";
 import { MdDelete, MdEdit, MdPreview } from "react-icons/md";
 import Loader from "../components/loader";
 import Notes from "./notes";
-import '../css/loader.css'
+import '../loader.css'
 
 export default function Show(){
     const [subject,setSubject]  = useState('')
