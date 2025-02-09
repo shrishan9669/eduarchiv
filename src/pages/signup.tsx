@@ -4,7 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import Loader from "../components/loader";
-import { useNavigate } from "react-router-dom";
+
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -14,7 +14,6 @@ export default function Signup() {
   const[name,setName] = useState('')
   const[desc,setDesc] = useState('')
   const [state, setState] = useState('password');
-  const nav = useNavigate()
 
   return (
     <div className="w-full h-screen bg-white flex justify-center items-center mb-20 mt-10">
