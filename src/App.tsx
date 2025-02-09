@@ -90,7 +90,7 @@ function Feedback({ setOpen,setPopup }: any) {
               e.preventDefault()
               try{
                 const submitted = await axios({
-                  url:"https://backend-s1z7.onrender.com/user/createfeedback",
+                  url:"https://backend-j5f0.onrender.com/user/createfeedback",
                   method:"POST",
                   data:{
                     feedby:localStorage.getItem('userid'),
