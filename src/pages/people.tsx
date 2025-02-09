@@ -131,10 +131,10 @@ function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
     <div key={id} className="w-full sm:w-[240px] border rounded-xl shadow-lg bg-white flex flex-col h-[320px]">
       {/* Background Image */}
       <div className="relative h-[90px]">
-        <img className="object-cover w-full h-full rounded-t-lg" src={back || "https://via.placeholder.com/150"} alt="Cover" />
+        <img className="object-cover w-full h-full rounded-t-lg" src={back || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"} alt="Cover" />
         <img
           className="absolute w-20 h-20 rounded-full left-1/2 transform -translate-x-1/2 -bottom-8 border-4 border-white"
-          src={front || "https://via.placeholder.com/150"}
+          src={front || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"}
           alt="Profile"
         />
       </div> {/* Content Section */}
