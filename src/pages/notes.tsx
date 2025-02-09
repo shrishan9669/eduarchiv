@@ -4,7 +4,7 @@ import Loader from "../components/loader"
 import { IoMdCheckmarkCircleOutline, IoMdDownload } from "react-icons/io"
 import { Circularloader } from "./show"
 import { MdDelete, MdEdit, MdPreview } from "react-icons/md"
-
+import '../loader.css'
 export default function Notes() {
     const [subject,setSubject]  = useState('')
     const [semester,setSemester] = useState('')
@@ -48,7 +48,7 @@ export default function Notes() {
         try{
 
           const response = await axios({
-                url:'https://backend-j5f0.onrender.com/user/postnote',
+                url:'http://localhost:3000/user/postnote',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -103,7 +103,7 @@ export default function Notes() {
 
       const [background,setBackground] = useState<string | null>(null)
       const[profile,setProfile] = useState<string | null>(null)
-
+      const[loadback,setLoadback] = useState(false)
     async function handlebackground(event:React.ChangeEvent<HTMLInputElement>){
       console.log("in function")
       const file = event.target.files?.[0]
@@ -114,21 +114,33 @@ export default function Notes() {
         const byteData = e.target?.result as string
         setBackground(byteData)
 
-        await axios({
-          url:'https://backend-j5f0.onrender.com/user/backimage',
-          method:"POST",
-          data:{
-            id:localStorage.getItem('userid'),
-            backimg:byteData 
-          },
-          headers:{'Content-Type':'application/json',"Authorization":`Bearer ${localStorage.getItem('token')}`},
-          
-         });
+        setLoadback(true)
+        try{
+          await axios({
+            url:'http://localhost:3000/user/backimage',
+            method:"POST",
+            data:{
+              id:localStorage.getItem('userid'),
+              backimg:byteData 
+            },
+            headers:{'Content-Type':'application/json',"Authorization":`Bearer ${localStorage.getItem('token')}`},
+            
+           });
+        }
+        catch(err){
+       console.log(err)
+       alert(err)
+        }
+        finally{
+          setLoadback(false)
+        }
+       
        
       }
       reader.readAsDataURL(file)
 
     }
+     const[loadpro,setLoadpro] = useState(false)
     async function handleprofile(event:React.ChangeEvent<HTMLInputElement>){
       console.log("in profile")
       const file = event.target.files?.[0]
@@ -139,16 +151,28 @@ export default function Notes() {
         const byteData = e.target?.result as string
         setProfile(byteData)
 
-        await axios({
-          url:'https://backend-j5f0.onrender.com/user/profileimage',
-          method:"POST",
-          data:{
-            id:localStorage.getItem('userid'),
-            frontimg:byteData
-          },
-          headers:{'Content-Type':'application/json',"Authorization":`Bearer ${localStorage.getItem('token')}`},
-          
-         });
+
+        setLoadpro(true)
+        try{
+          await axios({
+            url:'http://localhost:3000/user/profileimage',
+            method:"POST",
+            data:{
+              id:localStorage.getItem('userid'),
+              frontimg:byteData
+            },
+            headers:{'Content-Type':'application/json',"Authorization":`Bearer ${localStorage.getItem('token')}`},
+            
+           });
+        }
+        catch(err){
+          console.log(err)
+          alert(err)
+        }
+        finally{
+           setLoadpro(false)
+        }
+       
        
       }
       reader.readAsDataURL(file)
@@ -159,7 +183,7 @@ export default function Notes() {
       async function Getimages(){
         try{
           const images =await axios({
-            url:"https://backend-j5f0.onrender.com/user/getimage",
+            url:"http://localhost:3000/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -192,7 +216,7 @@ export default function Notes() {
     async function Users(){
       try{
         const user = await axios({
-          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -223,6 +247,7 @@ export default function Notes() {
   <div className="mx-6 md:mx-24 border-[1px] transition-all duration-150 hover:border-blue-500 rounded-lg">
     {/* Background image div */}
     <div className="w-full relative rounded-t-lg h-60 sm:h-80">
+    {loadback ? <div className="loader2">Uploading...</div>:''}
       <img
         className="h-full w-full object-fill rounded-t-lg"
         src={background || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'}
@@ -245,6 +270,8 @@ export default function Notes() {
     {/* Profile image and name */}
     <div className="relative -mt-20 sm:-mt-24 flex justify-center sm:justify-start px-6 sm:px-24">
       <div className="relative">
+      {loadpro ? <div className="loader">Uploading... </div>:''}
+
         <img
           className="w-32 h-32 sm:w-44 sm:h-44 border-4 border-black rounded-full"
           src={profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'}
@@ -358,7 +385,7 @@ export default function Notes() {
         setBuffer(true);
         try {
           const data = await axios({
-            url: `https://backend-j5f0.onrender.com/user/findnotes?semester=${Number(
+            url: `http://localhost:3000/user/findnotes?semester=${Number(
               semester
             )}&course=${course}`,
             method: "GET",
@@ -492,7 +519,7 @@ export default function Notes() {
     setYourbuffer(true);
     try {
       const data = await axios({
-        url: `https://backend-j5f0.onrender.com/user/yournotes?id=${localStorage.getItem("userid")}`,
+        url: `http://localhost:3000/user/yournotes?id=${localStorage.getItem("userid")}`,
         method: "GET",
         headers:{
           Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -614,7 +641,7 @@ function Cardyours({ subject, pdfid, type ,drivelink}: any) {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/deletenotes?id=${pdfid}`,
+                    url: `http://localhost:3000/user/deletenotes?id=${pdfid}`,
                     method: 'DELETE',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -622,7 +649,7 @@ function Cardyours({ subject, pdfid, type ,drivelink}: any) {
                   });
   
                   const res2 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
+                    url: `http://localhost:3000/user/reduceContrinew?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{
                       Authorization:`Bearer ${localStorage.getItem('token')}`
