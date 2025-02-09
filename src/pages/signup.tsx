@@ -88,7 +88,7 @@ export default function Signup() {
                 setBuf(true);
                 try {
                   const user = await axios({
-                    url: 'https://backend-j5f0.onrender.com/user/create',
+                    url: 'http://localhost:3000/user/create',
                     method: "POST",
                     data: {
                       email: email,
@@ -118,7 +118,7 @@ export default function Signup() {
           <div className="flex justify-center items-center space-x-2">
             <span className="text-sm text-gray-500">Already have an account?</span>
             <button
-              onClick={() => nav ('/login')}
+              onClick={() => window.location.href = ('/login')}
               className="text-sm text-indigo-600 hover:text-indigo-500 font-semibold"
             >
               Login
