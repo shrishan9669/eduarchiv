@@ -4,6 +4,7 @@ import { IoMdCheckmarkCircleOutline, IoMdDownload } from "react-icons/io";
 import { MdDelete, MdEdit, MdPreview } from "react-icons/md";
 import Loader from "../components/loader";
 import Notes from "./notes";
+import '../css/loader.css'
 
 export default function Show(){
     const [subject,setSubject]  = useState('')
@@ -20,6 +21,7 @@ export default function Show(){
     const [file,setFile] = useState<File | null>(null)
     
   
+    
     async function handlefileupload(){
         if(!type || !uploadCourse || !uploadsemester || !subject){
             alert("Please select all fields!!")
@@ -50,7 +52,7 @@ export default function Show(){
         try{
 
           const response = await axios({
-                url:'https://backend-j5f0.onrender.com/admin/pdfspost',
+                url:'http://localhost:3000/admin/pdfspost',
                 method:"POST",
                 data:formData,
                 headers:{
@@ -108,6 +110,8 @@ export default function Show(){
       const [background,setBackground] = useState<string | null>(null)
       const[profile,setProfile] = useState<string | null>(null)
       
+      const[loadback,setLoadback] = useState(false)
+
     async function handlebackground(event:React.ChangeEvent<HTMLInputElement>){
       console.log("in function")
       const file = event.target.files?.[0]
@@ -131,13 +135,16 @@ export default function Show(){
         const formdata = new FormData();
         formdata.append('file',file);
         formdata.append('id',localStorage.getItem('userid') || "");
-        
+          setLoadback(true)
+       
 
         try{
           await axios({
-            url:'https://backend-j5f0.onrender.com/user/backimage',
+            url:'http://localhost:3000/user/backimage',
             method:"POST",
             data:formdata,
+            
+              
             headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
             
            });
@@ -146,11 +153,17 @@ export default function Show(){
         catch(err){
           console.error("Error uploading image:", err);
         }
+        finally{
+          setLoadback(false)
+        }
+        
+        
         
       }
       reader.readAsDataURL(file)
 
     }
+    const[loadpro,setLoadpro] = useState(false)
     async function handleprofile(event:React.ChangeEvent<HTMLInputElement>){
       console.log("in profile")
       const file = event.target.files?.[0]
@@ -175,13 +188,28 @@ export default function Show(){
         formdata.append('id',localStorage.getItem('userid') || "");
         formdata.append("file",file)
 
-        await axios({
-          url:'https://backend-j5f0.onrender.com/user/profileimage',
-          method:"POST",
-          data:formdata,
-          headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
+       setLoadpro(true)
+        
+        try{
+          await axios({
+            url:'http://localhost:3000/user/profileimage',
+            method:"POST",
+            data:formdata
+            ,
+            headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`},
+            
+           });
+        }
+        catch(err){
+              console.log(err)
+              alert(err)
+          }
+          finally{
+            setLoadpro(false)
+          }
           
-         });
+      
+       
        
       }
       reader.readAsDataURL(file)
@@ -194,7 +222,7 @@ export default function Show(){
       async function Getimages(){
         try{
           const images =await axios({
-            url:"https://backend-j5f0.onrender.com/user/getimage",
+            url:"http://localhost:3000/user/getimage",
             params:{id:localStorage.getItem('userid')},
             headers:{
               Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -229,7 +257,7 @@ const[contri,setContri] = useState('')
     async function Users(){
       try{
         const user = await axios({
-          url:`https://backend-j5f0.onrender.com/user/userinfo?id=${localStorage.getItem('userid')}`,
+          url:`http://localhost:3000/user/userinfo?id=${localStorage.getItem('userid')}`,
           method:'GET',
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -307,10 +335,12 @@ const[contri,setContri] = useState('')
 
             <div className="mx-6 md:mx-24 border-[1px] transition-all duration-150 hover:border-blue-500 rounded-lg">
    {/*background  image div... */}
-   <div className="w-full relative rounded-t-lg h-60 sm:h-80">
-               <img className="h-full w-full  rounded-t-lg"
+   <div className="w-full relative flex justify-center items-center rounded-t-lg h-60 sm:h-80">
+    {loadback ? <div className="loader2">Uploading...</div>:''}
+           <img className="h-full w-full  rounded-t-lg"
                src={background || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'}
        /> 
+              
                <MdEdit title="change background image" className="cursor-pointer absolute top-3 text-4xl text-blue-600  border-b-2  rounded-full p-1  left-3"
                onClick={()=> document.getElementById('file-input')?.click()}
                />    
@@ -327,11 +357,13 @@ const[contri,setContri] = useState('')
              {/* profile image and name */}
             <div className="relative -mt-20 sm:-mt-24 flex justify-center sm:justify-start px-6 sm:px-24">
               <div className="relative">
-              <img  className="w-32 h-32 sm:w-44 sm:h-44 border-4 border-black rounded-full" 
-              src={profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'} alt="profile photo" />
+                {loadpro ? <div className="loader">Uploading... </div>:''}
+                <img  className={`w-32 h-32 sm:w-44 sm:h-44 border-4 border-black rounded-full `} 
+              src={profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s'} alt="" />
+              
            
                 {/* Edit for profile image */}
-                <MdEdit title="change background image" className="cursor-pointer absolute right-1 text-4xl text-blue-600 shadow-lg border-b-2  rounded-full p-1  bottom-1"
+                <MdEdit title="change profile image" className="cursor-pointer absolute right-1 text-4xl text-blue-600 shadow-lg border-b-2  rounded-full p-1  bottom-1"
                onClick={()=> document.getElementById('file-profile')?.click()}
                />    
 
@@ -441,7 +473,7 @@ const[contri,setContri] = useState('')
           setBuffer(true);
           try {
             const data = await axios({
-              url: `https://backend-j5f0.onrender.com/admin/findpdfs?semester=${Number(
+              url: `http://localhost:3000/admin/findpdfs?semester=${Number(
                 semester
               )}&course=${course}`,
               method: "GET",
@@ -587,7 +619,7 @@ const[contri,setContri] = useState('')
       setYourbuffer(true);
       try {
         const data = await axios({
-          url: `https://backend-j5f0.onrender.com/user/getall?studentid=${localStorage.getItem("userid")}`,
+          url: `http://localhost:3000/user/getall?studentid=${localStorage.getItem("userid")}`,
           method: "GET",
           headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
         });
@@ -720,13 +752,13 @@ export function Circularloader() {
                 } else setDelBuffer(true);
                 try {
                   const res1 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/delpdf?docid=${pdfid}`,
+                    url: `http://localhost:3000/user/delpdf?docid=${pdfid}`,
                     method: 'DELETE',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
   
                   const res2 = await axios({
-                    url: `https://backend-j5f0.onrender.com/user/reduceContri?userid=${localStorage.getItem('userid')}`,
+                    url: `http://localhost:3000/user/reduceContri?userid=${localStorage.getItem('userid')}`,
                     method: 'GET',
                     headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}
                   });
@@ -788,7 +820,7 @@ export function Circularloader() {
     async function Findpdf(){
       try{
         const The_pdf = await axios({
-          url:`https://backend-j5f0.onrender.com/admin/findpdflink?id=${pdfid}`,
+          url:`http://localhost:3000/admin/findpdflink?id=${pdfid}`,
           method:"GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
