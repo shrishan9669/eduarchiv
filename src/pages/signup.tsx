@@ -88,7 +88,7 @@ export default function Signup() {
                 setBuf(true);
                 try {
                   const user = await axios({
-                    url: 'http://localhost:3000/user/create',
+                    url: 'https://backend-j5f0.onrender.com/user/create',
                     method: "POST",
                     data: {
                       email: email,
