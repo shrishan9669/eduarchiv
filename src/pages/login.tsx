@@ -126,7 +126,7 @@ export default function Login() {
               </span>
               <button
                 className="px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-bold transition-all duration-300"
-                onClick={() => nav("/signup")}
+                onClick={() => window.location.href = ("/signup")}
               >
                 Sign Up
               </button>
