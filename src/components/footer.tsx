@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+
 
 export default function Footer() {
-  const nav = useNavigate();
+
   return (
     <footer
       style={{ fontFamily: '"Roboto Mono", serif' }}
@@ -27,7 +27,7 @@ export default function Footer() {
         </h1>
         <div className="flex flex-col items-center md:items-start gap-4">
           <p
-            onClick={() => nav("/")}
+            onClick={() => window.location.href = ("/")}
             className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium"
           >
             Home
