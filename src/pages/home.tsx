@@ -3,7 +3,7 @@ import { TbPdf } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import { WiDirectionUpRight } from "react-icons/wi";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
+
 
 export default function Home() {
   const [displayedText, setDisplayedText] = useState(""); // Track displayed text
@@ -46,7 +46,7 @@ export default function Home() {
   const { ref: ref3, inView: inView3 } = useInView({ threshold: 0.9 });
   const { ref: ref4, inView: inView4 } = useInView({ threshold: 0.9 });
 
-  const nav = useNavigate()
+
   return (
     <div className="flex flex-col w-screen items-center justify-between">
       {/* Hero Section */}
@@ -69,7 +69,7 @@ export default function Home() {
           </p>
           <button
             onClick={() => {
-             nav('/login')
+             window.location.href =('/login')
             }}
             className="px-6 py-3 rounded-full bg-blue-500 hover:bg-red-600 text-white font-semibold text-sm md:text-lg shadow-lg hover:shadow-xl transition-all duration-300"
             style={{ fontFamily: '"Roboto Mono", serif' }}
@@ -101,7 +101,7 @@ export default function Home() {
               and <span className="text-blue-500">Papers</span>.
             </p>
             <button
-              onClick={() => (nav ("/signup"))}
+              onClick={() => (window.location.href =  ("/signup"))}
               className="mt-5 bg-blue-500 flex items-center px-4 py-2 rounded-full text-white text-sm md:text-lg"
             >
               Make My Account <WiDirectionUpRight className="text-[24px] ml-2" />
