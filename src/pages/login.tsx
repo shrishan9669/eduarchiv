@@ -4,7 +4,7 @@ import {  useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import Loader from "../components/loader";
-import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
   
@@ -14,7 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [state, setState] = useState("password");
 
- const nav = useNavigate()
+
 
   
   return (
