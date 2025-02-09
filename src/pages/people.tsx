@@ -12,7 +12,7 @@ export default function People() {
 
   async function Getnonfriends() {
     const data = await axios({
-      url: `https://backend-j5f0.onrender.com/user/getpeople?userid=${localStorage.getItem(
+      url: `http://localhost:3000/user/getpeople?userid=${localStorage.getItem(
         "userid"
       )}`,
       method: "GET",
@@ -100,7 +100,7 @@ export default function People() {
             className={`${
               data.length === 0
                 ? "flex text-slate-500 italic justify-center items-center"
-                : "sm:grid flex flex-col items-center grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-11"
+                : "sm:grid flex flex-col items-center grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6"
             }`}
           >
             {data.length > 0
@@ -111,7 +111,7 @@ export default function People() {
                       front={each.profileimg}
                       back={each.backimg}
                       name={each.name}
-                      desc={each.description    }
+                      desc={each.description}
                       id={each.id}
                     />
                   );
@@ -128,7 +128,7 @@ function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
   const [got, setGot] = useState(false);
 
   return (
-    <div key={id} className="w-full sm:w-[250px] md:w-[280px] lg:w-[300px] border rounded-xl shadow-lg bg-white flex flex-col">
+    <div key={id} className="w-full sm:w-[240px] border rounded-xl shadow-lg bg-white flex flex-col h-[320px]">
       {/* Background Image */}
       <div className="relative h-[90px]">
         <img className="object-cover w-full h-full rounded-t-lg" src={back || "https://via.placeholder.com/150"} alt="Cover" />
@@ -140,7 +140,7 @@ function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
       </div> {/* Content Section */}
       <div className="flex flex-col items-center pt-14 px-4 pb-4 text-center">
         <h2 className="font-bold text-lg">{name}</h2>
-        <p className="text-slate-500 text-sm">{desc}</p>
+        <p className="text-slate-500 text-sm line-clamp-2">{desc}</p>
       </div>
 
       {/* Button */}
@@ -149,7 +149,7 @@ function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
           onClick={async () => {
             if (!got) {
               const sending = await axios({
-                url: "https://backend-j5f0.onrender.com/user/sendreq",
+                url: "http://localhost:3000/user/sendreq",
                 method: "POST",
                 data: {
                   sender: localStorage.getItem("userid"),
@@ -222,7 +222,7 @@ function Withdraw({ setWithdraw }: any) {
             onClick={async () => {
               try {
                 const deleted = await axios({
-                  url: `https://backend-j5f0.onrender.com/user/declinereq?rowid=${localStorage.getItem(
+                  url: `http://localhost:3000/user/declinereq?rowid=${localStorage.getItem(
                     "profileid"
                   )}`,
                   method: "DELETE",
