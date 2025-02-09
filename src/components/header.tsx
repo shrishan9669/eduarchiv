@@ -17,7 +17,7 @@ export default function Header() {
 
   async function Countnotify() {
     const count = await axios({
-      url: `https://backend-j5f0.onrender.com/user/countnotify?userid=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/countnotify?userid=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -25,7 +25,7 @@ export default function Header() {
     });
 
     const counti = await axios({
-      url: `https://backend-j5f0.onrender.com/user/counting?id=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/counting?id=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -70,28 +70,28 @@ export default function Header() {
             <div className="flex gap-7" style={{ fontFamily: '"Roboto Mono", serif' }}>
               <div
                 className="flex flex-col items-center cursor-pointer"
-                onClick={() => (nav('/show'))}
+                onClick={() => (window.location.href=('/show'))}
               >
                 <RiHome2Line className="p-1 text-blue-600 border-2 border-blue-600 text-4xl rounded-full hover:text-white hover:bg-blue-600 transition-all duration-200" />
                 <span className="text-slate-500 font-medium hover:text-black">Home</span>
               </div>
               <div
                 className="flex flex-col items-center cursor-pointer"
-                onClick={() => (nav('/people'))}
+                onClick={() => (window.location.href=('/people'))}
               >
                 <IoIosPeople className="p-1 text-blue-600 border-2 border-blue-600 text-4xl rounded-full hover:text-white hover:bg-blue-600 transition-all duration-200" />
                 <span className="text-slate-500 font-medium hover:text-black">People</span>
               </div>
               <div
                 className="flex flex-col items-center cursor-pointer"
-                onClick={() => (nav('/friends'))}
+                onClick={() => (window.location.href=('/friends'))}
               >
                 <LiaUserFriendsSolid className="p-1 text-blue-600 border-2 border-blue-600 text-4xl rounded-full hover:text-white hover:bg-blue-600 transition-all duration-200" />
                 <span className="text-slate-500 font-medium hover:text-black">Friends</span>
               </div>
               <div
                 className="flex relative flex-col items-center cursor-pointer"
-                onClick={() => (nav('/requests'))}
+                onClick={() => (window.location.href=('/requests'))}
               >
                 <GiThreeFriends className="p-1 text-blue-600 border-2 border-blue-600 text-4xl rounded-full hover:text-white hover:bg-blue-600 transition-all duration-200" />
                 <span className="text-slate-500 font-medium hover:text-black">Requests</span>
@@ -111,7 +111,7 @@ export default function Header() {
             <div style={{ fontFamily: '"Roboto Mono", serif' }}
               onClick={() => {
                 setCountup('');
-                nav('/notify');
+                window.location.href=('/notify');
               }}
               className="flex relative items-center gap-5 cursor-pointer"
             >
@@ -133,9 +133,9 @@ export default function Header() {
                 localStorage.removeItem('userid');
                 localStorage.removeItem('email');
                 localStorage.removeItem('token');
-                nav('/');
+                window.location.href=('/');
               } else {
-                nav('/login');
+                window.location.href=('/login');
               }
             }}
             className="text-blue-600 border-2 border-blue-500 px-2 py-1 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
@@ -154,11 +154,11 @@ export default function Header() {
           <div
             onClick={() => {
               if(['/login','/signup','/'].includes(location.pathname)){
-                nav('/')
+                window.location.href=('/')
                 setHam(false);
               }
               else  {
-                nav('/show');
+                window.location.href = ('/show');
                 setHam(false);
               }
              
@@ -172,7 +172,7 @@ export default function Header() {
           {/* People */}
           {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed')  ? '':<div 
             onClick={() => {
-              nav('/people');
+              window.location.href=('/people');
               setHam(false); // Close menu after selection
             }}
             className="text-lg font-semibold text-black hover:text-blue-600 transition-all duration-200"
@@ -183,7 +183,7 @@ export default function Header() {
 
           {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed')  ? '':<div
             onClick={() => {
-              nav('/friends');
+              window.location.href=('/friends');
               setHam(false); // Close menu after selection
             }}
             className="text-lg font-semibold text-black hover:text-blue-600 transition-all duration-200"
@@ -195,7 +195,7 @@ export default function Header() {
 
           {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed')  ?   '': <div
             onClick={() => {
-              nav('/requests');
+              window.location.href=('/requests');
               setHam(false); // Close menu after selection
             }}
             className="text-lg flex gap-3  font-semibold text-black hover:text-blue-600 transition-all duration-200"
@@ -207,7 +207,7 @@ export default function Header() {
 
           {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed') ? '':<div
             onClick={() => {
-              nav('/notify');
+              window.location.href = ('/notify');
               setHam(false); // Close menu after selection
             }}
             className="text-lg font-semibold flex gap-3 text-black hover:text-blue-600 transition-all duration-200"
@@ -224,10 +224,10 @@ export default function Header() {
                 localStorage.removeItem('userid');
                 localStorage.removeItem('email');
                 localStorage.removeItem('token');
-                nav('/');
+                window.location.href = ('/');
                 setHam(false);
               } else {
-                nav('/login');
+                window.location.href = '/login';
                 setHam(false);
               }
             }}
