@@ -140,7 +140,7 @@ export default function Header() {
             }}
             className="text-blue-600 border-2 border-blue-500 px-2 py-1 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
           >
-            {['/show', '/notify', '/people', '/requests'].includes(location.pathname)
+            {['/show', '/notify', '/people', '/requests','/notifyto','/friends'].includes(location.pathname)
               ? 'Log Out'
               : 'Log In'}
           </span>
