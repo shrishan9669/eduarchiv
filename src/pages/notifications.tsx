@@ -110,7 +110,7 @@ export default function Notification() {
                     });
                   }}
                   className="w-14 h-14 sm:w-20 sm:h-20 ml-2 sm:ml-5 rounded-full"
-                  src={each.profileimg}
+                  src={each.profileimg || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"}
                   alt="Sender's Profile"
                 />
                 <p
