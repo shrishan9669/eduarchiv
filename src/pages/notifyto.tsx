@@ -82,7 +82,7 @@ export default function Notifyto() {
             <div className="p-2 bg-blue-500 rounded-full">
               <img
                 className="w-24 h-24 sm:w-40 sm:h-40 rounded-full"
-                src={front || undefined}
+                src={front || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"}
                 alt="Profile image"
               />
             </div>
@@ -96,7 +96,7 @@ export default function Notifyto() {
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <img
                 className="w-24 h-24 sm:w-40 sm:h-40 rounded-full"
-                src={front || undefined}
+                src={front || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"}
                 alt="Profile"
               />
               <div className="flex flex-col items-center sm:items-start">
