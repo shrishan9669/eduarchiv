@@ -56,7 +56,7 @@ function Arequest({ name, id, userid , desc, front }: any) {
     <div className="flex flex-col md:flex-row items-center md:justify-between gap-4 p-4 bg-white shadow-md rounded-lg">
       {/* image, name, and description */}
       <div className="flex gap-4 items-center w-full md:w-auto">
-        <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={front} alt="" />
+        <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={front || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"} alt="" />
         <div className="flex flex-col">
           <span className="font-semibold text-lg md:text-xl">{name}</span>
           <p className="text-slate-500 text-sm md:text-base">
