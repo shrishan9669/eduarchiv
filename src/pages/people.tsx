@@ -12,7 +12,7 @@ export default function People() {
 
   async function Getnonfriends() {
     const data = await axios({
-      url: `http://localhost:3000/user/getpeople?userid=${localStorage.getItem(
+      url: `https://backend-j5f0.onrender.com/user/getpeople?userid=${localStorage.getItem(
         "userid"
       )}`,
       method: "GET",
@@ -149,7 +149,7 @@ function Followcard({ name, id, desc, setWithdraw, front, back }: any) {
           onClick={async () => {
             if (!got) {
               const sending = await axios({
-                url: "http://localhost:3000/user/sendreq",
+                url: "https://backend-j5f0.onrender.com/user/sendreq",
                 method: "POST",
                 data: {
                   sender: localStorage.getItem("userid"),
@@ -222,7 +222,7 @@ function Withdraw({ setWithdraw }: any) {
             onClick={async () => {
               try {
                 const deleted = await axios({
-                  url: `http://localhost:3000/user/declinereq?rowid=${localStorage.getItem(
+                  url: `https://backend-j5f0.onrender.com/user/declinereq?rowid=${localStorage.getItem(
                     "profileid"
                   )}`,
                   method: "DELETE",
