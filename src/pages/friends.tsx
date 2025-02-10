@@ -11,7 +11,7 @@ export default function Friends() {
   async function fetchFriends() {
     try {
       const response = await axios.get(
-        `https://backend-j5f0.onrender.com/user/takefriends?id=${localStorage.getItem("userid")}`,
+        `http://localhost:3000/user/takefriends?id=${localStorage.getItem("userid")}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -50,7 +50,11 @@ export default function Friends() {
           <h1 className="border mb-5 rounded-lg text-center font-medium text-gray-600 py-2 text-lg">
             All my friends
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className={`${
+              Object.entries(friends).length === 0
+                ? "flex text-slate-500 italic justify-center items-center"
+                : "sm:grid flex flex-col items-center grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            }`}>
           {Object.entries(friends).map(([key, value]: [string, any]) => (
               <FollowCard
                 desc={value?.description}
@@ -85,7 +89,7 @@ function FollowCard({ id, name, desc, front, back }: any) {
   async function handleUnfriend() {
     try {
       const response = await axios.put(
-        "https://backend-j5f0.onrender.com/admin/unfriend",
+        "http://localhost:3000/admin/unfriend",
         { id },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -100,7 +104,7 @@ function FollowCard({ id, name, desc, front, back }: any) {
   }
 
   return (
-    <div className="w-full sm:w-[250px] md:w-[280px] lg:w-[300px] border rounded-xl shadow-lg bg-white flex flex-col">
+    <div className="w-full sm:w-[240px] border rounded-xl shadow-lg bg-white flex flex-col h-[320px]">
       {/* Profile Header */}
       <div className="relative h-[80px]">
         <img className="object-cover w-full h-full rounded-t-lg" src={back || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjZn8mOw7F4rtWWKbEIIHOr_w_GAeHiXPgA&s"} alt="Cover" />
