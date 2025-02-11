@@ -34,7 +34,7 @@ export default function Contributors() {
     setLoading(true)
     try {
       const contributors = await axios({
-        url: "http://localhost:3000/admin/getContributors",
+        url: "https://backend-j5f0.onrender.com/admin/getContributors",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("userid")}`,
