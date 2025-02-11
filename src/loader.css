@@ -22,7 +22,7 @@
   }
   .loader:before,
   .loader:after {
-   
+    filter: blur(70px);
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -58,7 +58,7 @@
   }
   .loader2:before,
   .loader2:after {
-    
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -72,3 +72,58 @@
   @keyframes l2 {
       100% {box-shadow: 0 0 0 40px #0000}
   }
+
+
+
+
+/* sliding feature of contributors */
+.sliding-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  padding: 30px;
+  position: relative;
+}
+
+/* Ensuring sliding effect works well across all screen sizes */
+.sliding-track {
+  display: flex;
+  gap: 40px; /* Adjusted gap for responsiveness */
+  width: max-content;
+  animation: slide 7s linear infinite;
+}
+
+/* Individual Card Styling */
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .sliding-track {
+    gap: 30px; /* Reduce gap for smaller screens */
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .sliding-track {
+    gap: 20px; /* Even smaller gap */
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .sliding-track {
+    gap: 15px;
+  }
+  
+}
+
+/* Sliding Animation */
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%); /* Moves left by half the total width */
+  }
+}
