@@ -17,7 +17,7 @@ export default function Header() {
 
   async function Countnotify() {
     const count = await axios({
-      url: `http://localhost:3000/user/countnotify?userid=${localStorage.getItem('userid')}`,
+      url: `https://backend-j5f0.onrender.com/user/countnotify?userid=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -25,7 +25,7 @@ export default function Header() {
     });
 
     const counti = await axios({
-      url: `http://localhost:3000/user/counting?id=${localStorage.getItem('userid')}`,
+      url: `https://backend-j5f0.onrender.com/user/counting?id=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
