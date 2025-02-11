@@ -27,7 +27,14 @@ export default function Footer() {
         </h1>
         <div className="flex flex-col items-center md:items-start gap-4">
           <p
-            onClick={() => window.location.href = ("/")}
+            onClick={() => {
+              if(location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/signin' || location.pathname === '/adminfeed' || location.pathname==='/forgetpassword'){
+                window.location.href = '/'
+              }
+              else{
+                window.location.href = '/show'
+              }
+            }}
             className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium"
           >
             Home
@@ -38,7 +45,14 @@ export default function Footer() {
           <p className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium">
             Terms
           </p>
-          <p className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium">
+          <p onClick={()=> {
+            if(localStorage.getItem('token') != ''){
+              window.location.href = '/contributors'
+            }
+            else{
+              window.location.href = '/login'
+            }
+          }} className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium">
             Contributors
           </p>
           <p className="cursor-pointer hover:text-pink-600 transition-all duration-300 font-medium">
