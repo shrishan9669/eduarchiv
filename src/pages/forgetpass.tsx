@@ -24,7 +24,7 @@ export default function () {
     }
 
     try {
-      const response = await axios.put("http://localhost:3000/admin/changepassword", {
+      const response = await axios.put("https://backend-j5f0.onrender.com/admin/changepassword", {
         email: email,
         newpass: confirmpassword,
       });
