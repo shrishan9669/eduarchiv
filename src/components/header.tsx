@@ -17,7 +17,7 @@ export default function Header() {
 
   async function Countnotify() {
     const count = await axios({
-      url: `https://backend-j5f0.onrender.com/user/countnotify?userid=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/countnotify?userid=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -25,7 +25,7 @@ export default function Header() {
     });
 
     const counti = await axios({
-      url: `https://backend-j5f0.onrender.com/user/counting?id=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/counting?id=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -42,7 +42,6 @@ export default function Header() {
     }
   }, [location.pathname]);
 
-  
   return (
     <div className="shadow-xl border bg-white">
       {/* Main Header */}
@@ -66,7 +65,7 @@ export default function Header() {
           {location.pathname.includes('/people') ||
           location.pathname.includes('/notify') ||
           location.pathname.includes('/requests') ||
-          location.pathname.includes('/show')  || location.pathname.includes('/friends') ? (
+          location.pathname.includes('/show')  || location.pathname.includes('/friends') || location.pathname.includes('/notifyto') || location.pathname.includes('/contributors') || location.pathname.includes('/notes') ? (
             <div className="flex gap-7" style={{ fontFamily: '"Roboto Mono", serif' }}>
               <div
                 className="flex flex-col items-center cursor-pointer"
@@ -107,7 +106,7 @@ export default function Header() {
           {location.pathname !== '/' &&
           location.pathname !== '/login' &&
           location.pathname !== '/signup' &&
-          location.pathname !== '/adminfeed' ? (
+          location.pathname !== '/adminfeed' && location.pathname !== '/forgetpassword' ? (
             <div style={{ fontFamily: '"Roboto Mono", serif' }}
               onClick={() => {
                 setCountup('');
@@ -140,7 +139,7 @@ export default function Header() {
             }}
             className="text-blue-600 border-2 border-blue-500 px-2 py-1 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
           >
-            {['/show', '/notify', '/people', '/requests','/notifyto','/friends'].includes(location.pathname)
+            {['/show', '/notify', '/people', '/requests','/friends','/notifyto','/contributors'].includes(location.pathname)
               ? 'Log Out'
               : 'Log In'}
           </span>
@@ -153,7 +152,7 @@ export default function Header() {
           {/* Home */}
           <div
             onClick={() => {
-              if(['/login','/signup','/'].includes(location.pathname)){
+              if(['/login','/signup','/','/forgetpassword'].includes(location.pathname)){
                 window.location.href=('/')
                 setHam(false);
               }
@@ -170,7 +169,7 @@ export default function Header() {
           </div>
 
           {/* People */}
-          {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed')  ? '':<div 
+          {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed') || location.pathname === ('/forgetpassword')  ? '':<div 
             onClick={() => {
               window.location.href=('/people');
               setHam(false); // Close menu after selection
