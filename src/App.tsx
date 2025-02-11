@@ -21,6 +21,8 @@ import { CiCircleCheck } from 'react-icons/ci'
 
 import FeedbackSee from './pages/adminfeedback'
 import Friends from './pages/friends'
+import Contributors from './pages/contributors'
+import Forgetpass from './pages/forgetpass'
 
 
 function Feedpopup({setPopup}:any){
@@ -90,7 +92,7 @@ function Feedback({ setOpen,setPopup }: any) {
               e.preventDefault()
               try{
                 const submitted = await axios({
-                  url:"https://backend-j5f0.onrender.com/user/createfeedback",
+                  url:"http://localhost:3000/user/createfeedback",
                   method:"POST",
                   data:{
                     feedby:localStorage.getItem('userid'),
@@ -159,7 +161,7 @@ function App() {
       <Header/>
 
       
-      {location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/adminfeed' ? '':<div className='fixed bottom-3 right-3  z-50 '>
+      {location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/login' ||  location.pathname === '/forgetpassword' || location.pathname === '/adminfeed' ? '':<div className='fixed bottom-3 right-3  z-50 '>
       <button onClick={()=> setOpen(true)} className='bg-white shadow-xl sm:px-5 px-2 py-1 sm:py-3 flex items-center gap-4 sm:text-xl font-[700] hover:bg-blue-500 hover:text-white transition-all duration-100  text-blue-500 border border-slate-300 rounded-lg'>Feedback <MdFeedback /></button>
       
       </div>}
@@ -180,7 +182,8 @@ function App() {
         
          <Route path='/adminfeed' element={<FeedbackSee/>} />
          <Route path='/friends' element={<PrivateRoute><Friends/></PrivateRoute>} />
-         
+          <Route path='/contributors' element={<PrivateRoute><Contributors/></PrivateRoute>} />
+          <Route path='/forgetpassword' element={<Forgetpass/>} />
          
        </Routes>
       </main>
