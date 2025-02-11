@@ -4,7 +4,7 @@ import {  useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import Loader from "../components/loader";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   
@@ -14,7 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [state, setState] = useState("password");
 
-
+ const nav = useNavigate()
 
   
   return (
@@ -36,7 +36,7 @@ export default function Login() {
           <div className="flex flex-col gap-6">
             {/* Email Input */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-gray-600 text-lg">
+              <label htmlFor="email" className="text-gray-600 text-md">
                 Email
               </label>
               <input
@@ -52,7 +52,7 @@ export default function Login() {
 
             {/* Password Input */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-gray-600 text-lg">
+              <label htmlFor="password" className="text-gray-600 text-md">
                 Password
               </label>
               <div className="relative flex ">
@@ -79,6 +79,11 @@ export default function Login() {
               </div>
             </div>
 
+            <div className="flex justify-end">
+            <span onClick={()=> window.location.href = '/forgetpassword'} className="text-sm ml-2 text-slate-500 hover:underline hover:text-pink-500 cursor-pointer">Forget password</span>
+            </div>
+            
+
             {/* check box */}
             
             {/* Login Button */}
@@ -94,7 +99,7 @@ export default function Login() {
                 setBuf(true);
                 try {
                   const find = await axios({
-                    url: "https://backend-j5f0.onrender.com/user/login",
+                    url: "http://localhost:3000/user/login",
                     method: "POST",
                     data: {
                       email: email,
@@ -107,7 +112,7 @@ export default function Login() {
                     localStorage.setItem("userid", find.data.id);
                     localStorage.setItem("email", email);
                     localStorage.setItem("token",find.data.token)
-                    window.location.href = ("/show");
+                    nav("/show");
                   }
                 } catch (err) {
                   console.error("Error in frontend while logging in:", err);
@@ -126,7 +131,7 @@ export default function Login() {
               </span>
               <button
                 className="px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-bold transition-all duration-300"
-                onClick={() => window.location.href = ("/signup")}
+                onClick={() => nav("/signup")}
               >
                 Sign Up
               </button>
