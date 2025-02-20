@@ -153,12 +153,14 @@ function App() {
     const isAuthenticated = !!localStorage.getItem('token');
     return isAuthenticated ? children : <Navigate to={'/login'} />
   }
- 
+   const hideHeaderRoutes = ['/login', '/signup'];
+
   return (
     <div style={{ fontFamily: '"Roboto Mono", serif' }} className={`overflow-x-hidden flex  flex-col min-h-screen ${isopen  ? "blur-sm":''}`}>
       
       <BrowserRouter>
-      <Header/>
+        {/* Conditionally Render Header */}
+        {!hideHeaderRoutes.includes(location.pathname) && <Header />}
 
       
       {location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/login' ||  location.pathname === '/forgetpassword' || location.pathname === '/adminfeed' ? '':<div className='fixed bottom-3 right-3  z-50 '>
