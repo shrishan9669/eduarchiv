@@ -5,18 +5,24 @@ export default function Footer() {
   return (
     <footer
       style={{ fontFamily: '"Roboto Mono", serif' }}
-      className="flex flex-col md:flex-row items-center justify-between bg-white py-6 px-4 md:px-10 text-black border-t border-slate-300 space-y-6 md:space-y-0"
+      className="flex flex-col items-center justify-between bg-white   text-black border-t border-slate-300 md:space-y-0"
     >
-      {/* Left Section: Logo and Tagline */}
-      <div className="flex flex-col items-center md:items-start space-y-2">
+
+      <div className="w-full h-16  flex justify-center text-white items-center bg-violet-500 ">
+         &copy; 2025 Copyright : Ishan Shrivastava
+      </div>
+
+      <div className="flex px-4 md:px-6 md:flex-row flex-col gap-5 items-center bg-slate-800 text-white py-6    justify-between w-full">
+{/* Left Section: Logo and Tagline */}
+<div className="flex flex-col justify-start md:justify-center items-center md:items-start space-y-4  md:space-y-7">
         <h1
           style={{ fontFamily: '"Roboto Mono", serif' }}
-          className="text-3xl text-black font-bold"
+          className="text-3xl text-white font-bold"
         >
           <span className="text-blue-600">Edu</span>Archive
         </h1>
-        <p className="text-sm text-gray-400 text-center md:text-left">
-          Your one-stop platform for past papers.
+        <p className="text-sm text-gray-400 max-w-96  text-center md:text-left">
+        Your one-stop platform for past papers, study resources, and academic archives. Access, learn, and excel with ease! 🚀
         </p>
       </div>
 
@@ -28,7 +34,7 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start gap-4">
           <p
             onClick={() => {
-              if(location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/signin' || location.pathname === '/adminfeed' || location.pathname==='/forgetpassword'){
+              if(location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/adminfeed' || location.pathname==='/forgetpassword'){
                 window.location.href = '/'
               }
               else{
@@ -69,24 +75,27 @@ export default function Footer() {
         <div className="flex flex-col gap-2">
           <a
             href="#"
-            className="hover:text-pink-400 text-black transition-all duration-300"
+            className="hover:text-pink-400  transition-all duration-300"
           >
             Facebook
           </a>
           <a
             href="#"
-            className="hover:text-pink-400 text-black transition-all duration-300"
+            className="hover:text-pink-400  transition-all duration-300"
           >
             Twitter
           </a>
           <a
             href="#"
-            className="hover:text-pink-400 text-black transition-all duration-300"
+            className="hover:text-pink-400  transition-all duration-300"
           >
             Instagram
           </a>
         </div>
       </div>
+      </div>
+
+      
     </footer>
   );
 }
