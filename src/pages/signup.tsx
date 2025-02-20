@@ -56,13 +56,13 @@ export default function Signup() {
   {/* Password Input */}
   <div className="flex flex-col">
     <label htmlFor="password" className="text-sm font-light pl-4 text-gray-600">Password</label>
-    <div className="flex items-center space-x-2 mt-2 p-3 border bg-white justify-between rounded-3xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
+  <div className="flex items-center pr-3 mt-2  border bg-white justify-between rounded-3xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
       <input
         onChange={(e) => setPassword(e.target.value)}
         required
         type={state}
         id="password"
-        className=""
+        className="w-full p-3 rounded-3xl"
         placeholder="Enter your password"
       />
       {state === 'password' ? (
