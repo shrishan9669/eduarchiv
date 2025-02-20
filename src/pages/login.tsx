@@ -20,9 +20,9 @@ export default function Login() {
   return (
     <div className="w-screen h-screen  flex justify-center items-center">
       {/* Container */}
-      <div className="flex flex-col border md:flex-row w-[90%] md:w-[60%] bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div className="flex flex-col border md:flex-row w-[90%] md:w-[60%] bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* Left Section */}
-        <div className="hidden md:flex flex-col justify-center items-center w-[40%] bg-gradient-to-t from-blue-400 to-blue-600 text-white p-10">
+        <div className="hidden md:flex flex-col justify-center items-center w-[40%] bg-gradient-to-t from-red-500 to-pink-600 text-white p-10">
           <h2 className="text-4xl font-bold mb-4">Welcome Back!</h2>
           <p className="text-center">
             Log in to access past year's question papers and enhance your
@@ -32,7 +32,7 @@ export default function Login() {
 
         {/* Right Section */}
         <div className="flex flex-col w-full md:w-[60%] p-8 md:p-14">
-          <h1 className="text-3xl font-bold mb-8 text-gray-800">Login</h1>
+          <h1 className="text-3xl font-thin mb-8 text-gray-800">Login</h1>
           <div className="flex flex-col gap-6">
             {/* Email Input */}
             <div className="flex flex-col gap-2">
@@ -92,14 +92,17 @@ export default function Login() {
               className={`w-full py-3 rounded-lg text-white font-bold transition-all duration-300 ${
                 buffer
                   ? "bg-blue-200"
-                  : "bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-400"
+                  : "bg-gradient-to-r from-red-500  to-pink-600  focus:ring-4 focus:ring-blue-400"
               }`}
               onClick={async () => {
-                
+                if(!email || !password){
+                  alert("Please fill out all fields!!")
+                  return ;
+                }
                 setBuf(true);
                 try {
                   const find = await axios({
-                    url: "https://backend-j5f0.onrender.com/user/login",
+                    url: "http://localhost:3000/user/login",
                     method: "POST",
                     data: {
                       email: email,
@@ -125,12 +128,12 @@ export default function Login() {
             </button>
 
             {/* Sign Up Section */}
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex  gap-3 items-center mt-4">
               <span className="text-gray-500">
                 Don't have an account yet?
               </span>
               <button
-                className="px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-bold transition-all duration-300"
+                className=" text-purple-500 hover:underline rounded-lg font-medium transition-all duration-300"
                 onClick={() => nav("/signup")}
               >
                 Sign Up
