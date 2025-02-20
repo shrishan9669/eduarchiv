@@ -17,7 +17,7 @@ export default function Header() {
 
   async function Countnotify() {
     const count = await axios({
-      url: `https://backend-j5f0.onrender.com/user/countnotify?userid=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/countnotify?userid=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -25,7 +25,7 @@ export default function Header() {
     });
 
     const counti = await axios({
-      url: `https://backend-j5f0.onrender.com/user/counting?id=${localStorage.getItem('userid')}`,
+      url: `http://localhost:3000/user/counting?id=${localStorage.getItem('userid')}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -42,15 +42,20 @@ export default function Header() {
     }
   }, [location.pathname]);
 
+
+  // scroll to that element..
+  function scrollToSection(id:any){
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  }
   return (
-    <div className="shadow-xl border bg-white">
+    <div className=" mx-20 border-b   border-slate-500 bg-white">
       {/* Main Header */}
-      <div className="flex items-center justify-between px-6 py-3 lg:px-32">
+      <div className="flex items-center justify-between px-6 py-4 lg:px-32">
         {/* Logo Section */}
         <div className="flex items-center gap-4">
-          <img src={Docimage} className="w-12 h-12 rounded-full shadow-lg" alt="EduArchive Logo" />
-          <span style={{fontFamily:'"Bebas Neue", serif'}} className="text-2xl  lg:text-3xl tracking-wider font-extrabold font-serif cursor-pointer">
-            <span className="text-blue-300 tracking-wider" style={{fontFamily:'"Bebas Neue", serif'}}>Edu </span>Archive
+          <img src={Docimage} className="w-20 h-20 rounded-full shadow-lg" alt="EduArchive Logo" />
+          <span style={{fontFamily:'"Bebas Neue", serif'}} className="text-2xl  lg:text-3xl tracking-widest font-extrabold font-serif cursor-pointer">
+            <span className="text-blue-300 tracking-widest flex flex-col " style={{fontFamily:'"Bebas Neue", serif'}}>Edu </span>Archive
           </span>
         </div>
 
@@ -103,6 +108,16 @@ export default function Header() {
             </div>
           ) : null}
 
+       {location.pathname === '/' ?  <div className='hidden sm:flex gap-16 mr-12 items-center'>
+            <span className='text-md cursor-pointer transition-all duration-300 hover:text-pink-600' onClick={()=>{
+              scrollToSection('about')
+            }}>About Us</span>
+            <span onClick={()=>{
+              scrollToSection('overview')
+            }} className='text-md cursor-pointer transition-all duration-300 hover:text-pink-600'>Overview</span>
+          </div>:''}
+         
+
           {location.pathname !== '/' &&
           location.pathname !== '/login' &&
           location.pathname !== '/signup' &&
@@ -137,7 +152,7 @@ export default function Header() {
                 window.location.href=('/login');
               }
             }}
-            className="text-blue-600 border-2 border-blue-500 px-2 py-1 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
+            className=" border-2 border-black transition-all duration-300 px-4 py-2 rounded-md cursor-pointer hover:bg-black  hover:text-white"
           >
             {['/show', '/notify', '/people', '/requests','/friends','/notifyto','/contributors'].includes(location.pathname)
               ? 'Log Out'
@@ -148,7 +163,7 @@ export default function Header() {
 
       {/* Mobile Menu (Hamburger Options) */}
       {ham && (
-        <div className="sm:hidden animate-newheader bg-white py-3 flex flex-col items-center gap-3">
+        <div className="sm:hidden animate-newheader border-t-2 border-slate-500  bg-slate-100 py-3 flex flex-col items-center gap-3">
           {/* Home */}
           <div
             onClick={() => {
@@ -167,6 +182,16 @@ export default function Header() {
           >
             Home
           </div>
+
+          {location.pathname === '/' ?  <div className='flex flex-col justify-center  ml-12  gap-4 mr-12 items-center'>
+            <span className='text-md cursor-pointer hover:text-pink-600' onClick={()=>{
+              scrollToSection('about')
+            }}>About Us</span>
+            <span onClick={()=>{
+              scrollToSection('overview')
+            }} className='text-md cursor-pointer hover:text-pink-600'>Overview</span>
+          </div>:''}
+
 
           {/* People */}
           {location.pathname === '/signup' || location.pathname === ('/login') || location.pathname === ('/') || location.pathname === ('/adminfeed') || location.pathname === ('/forgetpassword')  ? '':<div 
