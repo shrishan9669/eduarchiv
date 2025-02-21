@@ -27,8 +27,8 @@ export default {
           '100%':{transform:'translateX(1)',opacity:'1'}
         },
         'newheader':{
-          '0%':{transform:'translateY(100%)',opacity:'0'},
-          '100%':{transform:'translateY(1)',opacity:'1'}
+          '0%':{transform:'translateX(100%)',opacity:'0'},
+          '100%':{transform:'translateX(1)',opacity:'1'}
         }
 
       },
