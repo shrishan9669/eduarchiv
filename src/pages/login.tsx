@@ -18,25 +18,32 @@ export default function Login() {
 
   
   return (
-    <div className="w-screen h-screen  flex justify-center items-center">
+    <div
+    style={{
+
+      backgroundImage:'url(https://images.unsplash.com/photo-1508780709619-79562169bc64?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fHRlY2hub2xvZ3l8ZW58MHx8MHx8fDA%3D)',
+      backgroundPosition:"center",
+      backgroundSize:'cover'
+    }}
+    className="w-screen h-screen  flex justify-center items-center">
       {/* Container */}
-      <div className="flex flex-col border md:flex-row w-[90%] md:w-[60%] bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className="flex flex-col md:justify-center border md:flex-row w-[90%] md:w-[60%] bg-inherit rounded-2xl shadow-2xl overflow-hidden">
         {/* Left Section */}
-        <div className="hidden md:flex flex-col justify-center items-center w-[40%] bg-gradient-to-t from-red-500 to-pink-600 text-white p-10">
+        {/* <div className="hidden md:flex flex-col justify-center items-center w-[40%] bg-gradient-to-t from-red-500 to-pink-600 text-white p-10">
           <h2 className="text-4xl font-bold mb-4">Welcome Back!</h2>
           <p className="text-center">
             Log in to access past year's question papers and enhance your
             academic preparation.
           </p>
-        </div>
+        </div> */}
 
         {/* Right Section */}
         <div className="flex flex-col w-full md:w-[60%] p-8 md:p-14">
-          <h1 className="text-3xl font-thin mb-8 text-gray-800">Login</h1>
+          <h1 className="text-3xl font-bold mb-8 text-white">Login</h1>
           <div className="flex flex-col gap-6">
             {/* Email Input */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-gray-600 text-md">
+              <label htmlFor="email" className="text-white text-md">
                 Email
               </label>
               <input
@@ -52,7 +59,7 @@ export default function Login() {
 
             {/* Password Input */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-gray-600 text-md">
+              <label htmlFor="password" className="text-white text-md">
                 Password
               </label>
               <div className="relative flex ">
@@ -80,7 +87,7 @@ export default function Login() {
             </div>
 
             <div className="flex justify-end">
-            <span onClick={()=> window.location.href = '/forgetpassword'} className="text-sm ml-2 text-slate-500 hover:underline hover:text-pink-500 cursor-pointer">Forget password</span>
+            <span onClick={()=> window.location.href = '/forgetpassword'} className="text-sm ml-2 text-white hover:underline hover:text-pink-500 cursor-pointer">Forget password</span>
             </div>
             
 
@@ -102,7 +109,7 @@ export default function Login() {
                 setBuf(true);
                 try {
                   const find = await axios({
-                    url: "https://backend-j5f0.onrender.com/user/login",
+                    url: "http://localhost:3000/user/login",
                     method: "POST",
                     data: {
                       email: email,
@@ -129,11 +136,11 @@ export default function Login() {
 
             {/* Sign Up Section */}
             <div className="flex  gap-3 items-center mt-4">
-              <span className="text-gray-500">
+              <span className="text-white">
                 Don't have an account yet?
               </span>
               <button
-                className=" text-purple-500 hover:underline rounded-lg font-medium transition-all duration-300"
+                className=" text-pink-700 hover:underline rounded-lg font-medium transition-all duration-300"
                 onClick={() => nav("/signup")}
               >
                 Sign Up
