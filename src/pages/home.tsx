@@ -9,11 +9,11 @@ export default function Home() {
 
   
 
-  const { ref, inView } = useInView({ threshold: 0.9 });
-  const { ref: ref1, inView: inView1 } = useInView({ threshold: 0.9 });
-  const { ref: ref2, inView: inView2 } = useInView({ threshold: 0.9 });
-  const { ref: ref3, inView: inView3 } = useInView({ threshold: 0.9 });
-  const { ref: ref4, inView: inView4 } = useInView({ threshold: 0.9 });
+  // const { ref, inView } = useInView({ threshold: 0.9 });
+  // const { ref: ref1, inView: inView1 } = useInView({ threshold: 0.9 });
+  // const { ref: ref2, inView: inView2 } = useInView({ threshold: 0.9 });
+  // const { ref: ref3, inView: inView3 } = useInView({ threshold: 0.9 });
+  // const { ref: ref4, inView: inView4 } = useInView({ threshold: 0.9 });
 
   const [visible, setVisible] = useState(false);
 
@@ -38,6 +38,27 @@ export default function Home() {
       window.removeEventListener("scroll", toggleVisible);
     };
   }, []);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const overview = document.getElementById('feature');
+      const cards = document.querySelectorAll('.card');
+      const rect = overview?.getBoundingClientRect();
+  
+      if (rect &&  rect.top < window.innerHeight * 0.75) {
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('opacity-100', 'scale-100');
+          }, index * 100); // Delay each card animation
+        });
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
 
   return (
     <div className="flex flex-col w-screen items-center relative justify-between">
@@ -135,108 +156,68 @@ export default function Home() {
 
       {/* Overview Section */}
       <div
-        id="overview"
-        style={{ fontFamily: '"Roboto Mono", serif' }}
-        className="w-full flex mt-[540px] flex-col gap-20 sm:py-10 sm:mt-10"
-      >
-        {/* Side Lines of Overview */}
-        <div className="flex items-center justify-center">
-          <div className="h-1 w-[20%] sm:w-[30%] md:w-[500px] mr-4 sm:mr-20 border-t border-slate-500"></div>
-          <h1 className="flex justify-center font-bold text-2xl underline text-blue-400">
-            Overview
-          </h1>
-          <div className="h-1 w-[20%] sm:w-[30%] md:w-[500px] ml-4 sm:ml-20 border-t border-slate-500"></div>
-        </div>
+  id="feature"
+  style={{ fontFamily: '"Roboto Mono", serif' }}
+  className="w-full flex flex-col gap-10 mb-10 sm:mb-0 sm:py-10 mt-[540px] sm:mt-10"
+>
+  {/* Side Lines of Overview */}
+  <div className="flex items-center justify-center">
+    <div className="h-1 w-[20%] sm:w-[30%] md:w-[500px] mr-4 sm:mr-20 border-t border-slate-500"></div>
+    <h1 className="font-bold text-2xl underline text-blue-400">Features</h1>
+    <div className="h-1 w-[20%] sm:w-[30%] md:w-[500px] ml-4 sm:ml-20 border-t border-slate-500"></div>
+  </div>
 
-        {/* Cards Section */}
-        <div ref={ref} className="px-5  md:px-20 md:mb-10">
-          <div
-            className={`transition-all duration-300 ${
-              inView ? "opacity-100 shadow-blue-200 border-blue-800 border translate-x-0" : "opacity-0 -translate-x-10"
-            } h-[240px] flex flex-col items-center justify-center text-center shadow-xl rounded-3xl border border-slate-300 bg-white`}
-          >
-            <p className="w-[90%] font-bold text-lg md:text-xl">
-              Make account and get ready to leverage{" "}
-              <span className="text-blue-500">Notes</span> and{" "}
-              <span className="text-blue-500">Papers</span>.
-            </p>
+  {/* Cards Section */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-5" id="cards-container">
+    {[
+      {
+        text: "Make account and get ready to leverage Notes and Papers.",
+        buttonText: "Make My Account",
+        link: "/signup",
+        bgImage: "https://images.unsplash.com/photo-1622993361017-180360aea82c?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        text: "Upload your File by filling the fields like semester, course, and subject.",
+        buttonText: "Upload",
+        link: "/show",
+        bgImage: "https://plus.unsplash.com/premium_photo-1664300791530-6461a618c0a8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHVwbG9hZCUyMGZpbGVzfGVufDB8fDB8fHww"
+      },
+      {
+        text: "See Uploaded papers and notes related to Courses and Semester.",
+        bgImage: "https://images.unsplash.com/photo-1603053847153-65b11031a6fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cmVhZCUyMHBhcGVyc3xlbnwwfHwwfHx8MA%3D%3D"
+      },
+      {
+        text: "Contribute to the Archive and increase your Reward points.",
+        bgImage: "https://images.unsplash.com/photo-1671469899829-8c1c400f5866?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGNvbnRyaWJ1dGUlMjBhbmQlMjByZXdhcmR8ZW58MHx8MHx8fDA%3D"
+      },
+      {
+        text: "Connect with your Friends and get Updates.",
+        bgImage: "https://plus.unsplash.com/premium_photo-1664440922744-5ecdf4907b0d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y29ubmVjdHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ].map((card, index) => (
+      <div key={index} className="w-full flex justify-center opacity-0 transform scale-90 transition-all duration-700 delay-[${index * 200}ms] card">
+        <div
+          style={{
+            backgroundImage: `url(${card.bgImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+          className={`h-[300px] w-full max-w-[500px] flex flex-col items-center justify-center text-center shadow-xl border border-slate-300 bg-white p-5 rounded-lg `}
+        >
+          <p className="w-[90%] font-bold text-2xl text-white">{card.text}</p>
+          {card.buttonText && (
             <button
-              onClick={() => (window.location.href = "/signup")}
-              className="mt-5 border-2 flex items-center px-4 py-2 rounded-full hover:bg-black hover:text-white transition-all duration-200 text-sm md:text-lg"
+              onClick={() => (window.location.href = card.link)}
+              className="mt-5 border-2 px-4 py-3 rounded-full text-white hover:bg-black hover:text-white transition-all duration-200 text-lg"
             >
-              Make My Account <WiDirectionUpRight className="text-[24px] ml-2" />
+              {card.buttonText}
             </button>
-          </div>
-        </div>
-
-        <div ref={ref1} className="flex justify-center md:px-10">
-          <div
-            className={`transition-all duration-300 ${
-              inView1 ? "opacity-100 shadow-blue-200 border-blue-800 border translate-x-0" : "opacity-0 -translate-x-10"
-            } h-[240px] flex flex-col items-center justify-center mx-5 md:mx-0 text-center shadow-xl rounded-3xl border border-slate-300 bg-white`}
-          >
-            <p className="w-[90%] font-bold text-lg md:text-xl">
-              Upload your <span className="text-blue-500">File</span> by filling the fields like
-              semester, course, and subject.
-            </p>
-            <div className="flex gap-3 items-center mt-5 border-2 rounded-lg transition-all duration-200 px-2 py-2 hover:bg-black hover:text-white">
-              <button
-                onClick={() => {
-                  if (localStorage.getItem("token") !== "") {
-                    window.location.href = "/show";
-                  } else {
-                    window.location.href = "/login";
-                  }
-                }}
-                className="cursor-pointer"
-              >
-                Upload
-              </button>
-              <MdOutlineFileUpload />
-            </div>
-          </div>
-        </div>
-
-        <div ref={ref2} className="px-5 md:px-20 md:mt-10 md:mb-10">
-          <div
-            className={`transition-all duration-300 ${
-              inView2 ? "opacity-100 shadow-blue-200 border-blue-800 border translate-x-0" : "opacity-0 -translate-x-10"
-            } h-[240px] flex flex-col items-center justify-center text-center shadow-xl rounded-3xl border border-slate-300 bg-white`}
-          >
-            <p className="w-[90%] font-bold text-lg md:text-xl">
-              See Uploaded papers and notes related to{" "}
-              <span className="text-blue-500">Courses</span> and{" "}
-              <span className="text-blue-500">Semester</span>.
-            </p>
-          </div>
-        </div>
-
-        <div ref={ref3} className="flex justify-center px-5 md:px-10">
-          <div
-            className={`transition-all duration-300 ${
-              inView3 ? "opacity-100 shadow-blue-200 border-blue-800 border translate-x-0" : "opacity-0 translate-x-10"
-            } h-[240px] flex flex-col items-center justify-center text-center shadow-xl rounded-3xl border border-slate-300 bg-white`}
-          >
-            <p className="w-[90%] font-bold text-lg md:text-xl">
-              Contribute to the Archive and increase your{" "}
-              <span className="text-blue-500">Reward points</span>.
-            </p>
-          </div>
-        </div>
-
-        <div ref={ref4} className="px-5 md:px-20">
-          <div
-            className={`transition-all duration-300 ${
-              inView4 ? "opacity-100 shadow-blue-200 border-blue-800 border translate-x-0" : "opacity-0 -translate-x-10"
-            } h-[240px] flex flex-col items-center justify-center text-center shadow-xl rounded-3xl border border-slate-300 bg-white`}
-          >
-            <p className="w-[90%] font-bold text-lg md:text-xl">
-              Connect with your <span className="text-blue-500">Friends</span> and get{" "}
-              <span className="text-blue-500">Updates</span>.
-            </p>
-          </div>
+          )}
         </div>
       </div>
+    ))}
+  </div></div>
+
     </div>
   );
 }
