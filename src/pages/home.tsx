@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
-import { MdOutlineFileUpload } from "react-icons/md";
-import { WiDirectionUpRight } from "react-icons/wi";
-import { useInView } from "react-intersection-observer";
+
 
 export default function Home() {
   
